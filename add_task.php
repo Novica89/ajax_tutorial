@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (!is_ajax()) {
+    throw new Exception('Uh oh... AJAX requests only!');
+}
+
 /* Process the form for creating a new task */
 if (inputValid('title') && inputValid('description')) {
     // all good, we're gonna create new Task
@@ -9,14 +14,28 @@ if (inputValid('title') && inputValid('description')) {
     ];
 
 } else {
-    header('Location: http://ajax_tutorial.test/');
-    exit;
+    // input not valid, return error
+    http_response_code(403);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'You must fill in both, title and description to add a task'
+    ]);
+    die;
 }
+
+http_response_code(200);
+echo json_encode([
+    'status' => 'success',
+    'message' => 'Task has been created'
+]);
+
 
 function inputValid($input_name) {
     return isset($_POST[$input_name]) && ! empty($_POST[$input_name]);
 }
 
-/* Redirect back to our application front */
-header('Location: http://ajax_tutorial.test/');
-exit;
+//Function to check if the request is an AJAX request
+function is_ajax() {
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+}
+

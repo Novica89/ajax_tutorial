@@ -24,7 +24,7 @@ if (!isset($_SESSION['tasks'])) {
         <div class="row">
             <div class="col-md-6 offset-md-0 col-sm-10 offset-sm-1 col-xs-10 offset-xs-1 mb-2">
                 <h2>Create Task</h2>
-                <form action="add_task.php" method="POST">
+                <form action="add_task.php" method="POST" id="create-task-form">
                     <div class="form-group">
                         <label class="form-label" for="title">Title</label>
                         <input type="text" name="title" class="form-control" id="title">
@@ -37,12 +37,16 @@ if (!isset($_SESSION['tasks'])) {
                         <button class="btn btn-primary"> Create</button>
                     </div>
                 </form>
+
+                <div class="alert alert-danger validation-errors" style="display: none"></div>
+
+                <div class="alert alert-success task-added-message" style="display: none"></div>
+
             </div>
             <div class="col-md-6 offset-md-0 col-sm-10 offset-sm-1 col-xs-10 offset-xs-1">
                 <h2>Existing Tasks</h2>
                 <?php foreach($_SESSION['tasks'] as $index => $task): ?>
                     <div class="card">
-                        <!--                        <img class="card-img-top" src="..." alt="Card image cap">-->
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $task['title']; ?></h5>
                             <p class="card-text"><?php echo $task['description']; ?></p>
@@ -53,5 +57,8 @@ if (!isset($_SESSION['tasks'])) {
             </div>
         </div>
     </div>
+
+<script src="js/app.js"></script>
+
 </body>
 </html>
