@@ -4,7 +4,6 @@ if (!isset($_SESSION['tasks'])) {
     $_SESSION['tasks'] = [];
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,14 +42,14 @@ if (!isset($_SESSION['tasks'])) {
                 <div class="alert alert-success task-added-message" style="display: none"></div>
 
             </div>
-            <div class="col-md-6 offset-md-0 col-sm-10 offset-sm-1 col-xs-10 offset-xs-1">
+            <div class="col-md-6 offset-md-0 col-sm-10 offset-sm-1 col-xs-10 offset-xs-1 task-list">
                 <h2>Existing Tasks</h2>
                 <?php foreach($_SESSION['tasks'] as $index => $task): ?>
-                    <div class="card">
+                    <div class="card" id="task-<?php echo $index; ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $task['title']; ?></h5>
                             <p class="card-text"><?php echo $task['description']; ?></p>
-                            <a href="finish_task.php?position=<?php echo $index ?>" class="btn btn-primary">Finished</a>
+                            <a href="finish_task.php?position=<?php echo $index; ?>" class="btn btn-primary finish-task">Finished</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

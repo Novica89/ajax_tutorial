@@ -8,10 +8,13 @@ if (!is_ajax()) {
 /* Process the form for creating a new task */
 if (inputValid('title') && inputValid('description')) {
     // all good, we're gonna create new Task
-    $_SESSION['tasks'][] = [
+    $new_task = [
+        'id'            => count($_SESSION['tasks']),
         'title'         => $_POST['title'],
         'description'   => $_POST['description']
     ];
+
+    $_SESSION['tasks'][] = $new_task;
 
 } else {
     // input not valid, return error
@@ -26,7 +29,8 @@ if (inputValid('title') && inputValid('description')) {
 http_response_code(200);
 echo json_encode([
     'status' => 'success',
-    'message' => 'Task has been created'
+    'message' => 'Task has been created',
+    'resource' => $new_task
 ]);
 
 
